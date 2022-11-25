@@ -85,7 +85,7 @@ this.NombreArchivo = nombre;
         console.log("no se puede eliminar los productos");
       }
           }
-         async update(id, producto){
+         async updateProduct(id, producto){
         try {
         this.deleteById(id)
           this.save(producto);
@@ -257,7 +257,7 @@ this.NombreArchivo = nombre;
 const express = require("express");
 const app = express();
 const {Router} = express;
-const PORT = process.env.port || 8080;
+const PORT = process.env.PORT;
 const productos = new Productos(__dirname +"/Productos.txt");
 const carrito = new Carrito(__dirname +"/Carrito.txt");
 const fs = require("fs");
@@ -294,7 +294,7 @@ routerProductos.post("/",async(req,res)=>{
 });
 routerProductos.put("/",(req,res)=>{
   if(admin){
-    const result = productos.update(req.body);
+    const result = productos.updateProduct(req.body);
     res.json(result);
   }else{
     res.json("Permiso Denegado")
