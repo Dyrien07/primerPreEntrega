@@ -95,7 +95,32 @@ this.NombreArchivo = nombre;
 
 
 }
+async updateProduct(product){
+
+    //id, timestamp, nombre, descripcion, código, foto (url), precio, stock
+    const productosTotal = await this.getAll();
+    const unProducto = productosTotal.find(elemnto=>elemnto.id == product.id)
+    const indice = productosTotal.findIndex(elemnto=>elemnto.id == product.id);
+
+    if (unProducto){
+            if (product.nombre != null) {productosTotal[indice].nombre = product.nombre}
+            if (product.descripcion != null) {productosTotal[indice].descripcion = product.descripcion}
+            if (product.codigo != null) {productosTotal[indice].codigo = product.codigo}
+            if (product.foto != null) {productosTotal[indice].foto = product.foto}
+            if (product.precio != null) {productosTotal[indice].precio = product.precio}
+            if (product.stock != null) {productosTotal[indice].stock = product.stock}
+  
+            await   fs.promises.writeFile(this.NombreArchivo,JSON.stringify(productosTotal,null,2));
+  
+            return `El producto ${product.id}  fue actualizado con exito`
+            
+          }else{
+                   return "NO SE ENCUENTRA PRODUCTO para actualizar"
+           }
+    }
+
 }
+
 
 class Carrito{
     constructor(nombre){
